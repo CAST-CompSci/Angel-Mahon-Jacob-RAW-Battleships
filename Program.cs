@@ -8,13 +8,21 @@ namespace ConsoleApp10
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            //Console.ForegroundColor = ConsoleColor.Blue;
-            //Console.BackgroundColor = ConsoleColor.White;
-            //Console.Clear();
+            //This section has been commented out for the moment. It will be implemented later.
+            /*
+            Console.SetWindowSize(60, 60);
+            Console.BufferHeight = 60;
+            Console.BufferWidth = 100;
+
+            Console.ForegroundColor = ConsoleColor.Blue; 
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
             //^Changes whole console colour and foreground colour now.
-            int size = 0;
+             */
+
             string[,] hitMatrix = new string[12, 12];
 
             for (int i = 0; i <= 11; i++)
@@ -24,6 +32,7 @@ namespace ConsoleApp10
                     hitMatrix[i, j] = (" ");
                 }
             }
+
 
             int amountofbotes = 5;
 
@@ -35,9 +44,11 @@ namespace ConsoleApp10
                 Random generator2 = new Random();
                 int rand2 = generator.Next(0, 11);
 
+
                 hitMatrix[rand, rand2] = "#";
 
                 Random generator3 = new Random();
+
                 int direction = generator.Next(1, 4);
 
                 //  Random generator4 = new Random();
