@@ -1,34 +1,51 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Updated_Battleship
+namespace Test_of_increace
 {
     class Program
     {
-
         static void Winner()
         {
-            
+
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Clear();
+            for (var a = 0; a < 990; a++)
+            {
+                Console.Write(":-) ");
+            }
+            System.Threading.Thread.Sleep(100);
             string winner = "Congratulations, you have won this game of Battleships!";
-            
+
             Console.SetWindowSize(120, 30);
             Console.SetCursorPosition(Console.WindowWidth / 2 - winner.Length / 2, Console.WindowHeight / 2);
             for (int i = 0; i <= winner.Length - 1; i++)
             {
                 Console.Write(winner[i]);
-                System.Threading.Thread.Sleep(4);
+                System.Threading.Thread.Sleep(25);
             }
             Console.ReadKey();
             System.Environment.Exit(1);
         }
 
+        static void Looser()
+        {
+            Console.Clear();
+            Console.WriteLine("You ran out of hits, :-(. Better luck next time.");
+            Console.ReadKey();
+            for (var a = 0; a < 1000; a++)
+            {
+                Console.Write(":-( ");
+            }
+            System.Threading.Thread.Sleep(10);
+            System.Environment.Exit(1);
+        }
         static int safeIntInput(String message)
         {
             int Number = 0;
@@ -52,24 +69,18 @@ namespace Updated_Battleship
             return Number;
         }
 
-        static void notPlacable()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        static void Destroy(int size, string[,] hitMatrix, string[,] selectMatrix, int crosses, int numberOfBoats)
+        static void Destroy(int size, string[,] hitMatrix, string[,] selectMatrix, int crosses, int numberOfBoats, int hitsUsed)
         {
             int[] currentSelection = new int[2];
             currentSelection[0] = 0;
             currentSelection[1] = 0;
             string selectionType = "X";
-
+            
             while (true)
             {
                 selectMatrix[currentSelection[0], currentSelection[1]] = selectionType;
 
-                BuildAll(size, hitMatrix, selectMatrix, crosses, numberOfBoats);
+                BuildAll(size, hitMatrix, selectMatrix, crosses, numberOfBoats, hitsUsed);
                 ConsoleKeyInfo keyinfo;
                 keyinfo = Console.ReadKey();
                 if (keyinfo.Key == ConsoleKey.UpArrow)
@@ -106,11 +117,13 @@ namespace Updated_Battleship
                 }
                 else if (keyinfo.Key == ConsoleKey.Enter)
                 {
+                    
                     int length = 5;
                     selectionType = "E";
                     if (hitMatrix[currentSelection[0], currentSelection[1]] == " ")
                     {
                         hitMatrix[currentSelection[0], currentSelection[1]] = "/";
+                        hitsUsed++;
                     }
                     else if (hitMatrix[currentSelection[0], currentSelection[1]] == "X")
                     {
@@ -135,7 +148,7 @@ namespace Updated_Battleship
 
         }
 
-        static void BuildAll(int size, string[,] hitMatrix, string[,] selectMatrix, int crosses, int numberOfboats)
+        static void BuildAll(int size, string[,] hitMatrix, string[,] selectMatrix, int crosses, int numberOfboats, int hitsUsed)
         {
             int hits = 0;
             ConsoleColor[,] textColorMatrix = new ConsoleColor[size, size];
@@ -238,7 +251,7 @@ namespace Updated_Battleship
                     Console.Write(" ");
                     Console.BackgroundColor = backColorMatrix[c, b];
                     Console.ForegroundColor = textColorMatrix[c, b];
-                    Console.Write(displayMatrix[c, b]);
+                    Console.Write(hitMatrix[c, b]);
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(" ");
@@ -275,18 +288,27 @@ namespace Updated_Battleship
             for (var a = 2; a <= numberOfboats + 1; a++)
             {
                 total = total + a;
+           
             }
+            int remainingHits = 0;
+            remainingHits = remainingHits + (((size*size) - total)/2) - hitsUsed;
             Console.WriteLine("");
             Console.WriteLine("Game stats. Hits: " + hits + "/" + total);
+            Console.WriteLine("Remaining misses: " + remainingHits);
             if (hits == total)
             {
                 Winner();
+            }
+            if (remainingHits == 0)
+            {
+                Looser();
             }
         }
 
         static bool addShip(int size, string[,] hitMatrix, string[,] selectMatrix, int length, int[] currentSelection, int direction, int crosses)
         {
             string selectionType = "X";
+
             bool isPlacable = true;
             if (direction == 1)
             {
@@ -309,13 +331,12 @@ namespace Updated_Battleship
                 {
                     for (var a = 0; a < length; a++)
                     {
+
                         hitMatrix[currentSelection[0], currentSelection[1] - a] = "X";
+                        
+
                     }
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
-                }
-                else
-                {
-                    notPlacable();
                 }
             }
             else if (direction == 2)
@@ -341,13 +362,10 @@ namespace Updated_Battleship
                     {
                         {
                             hitMatrix[currentSelection[0], currentSelection[1] + a] = "X";
+  
                         }
                     }
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
-                }
-                else
-                {
-                    notPlacable();
                 }
             }
             else if (direction == 3)
@@ -374,14 +392,17 @@ namespace Updated_Battleship
                     {
                         {
                             hitMatrix[currentSelection[0] - a, currentSelection[1]] = "X";
+                     
                         }
                     }
+                    
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
                 }
-                else
-                {
-                    notPlacable();
-                }
+        
+
+
+
+
             }
             else if (direction == 4)
             {
@@ -406,14 +427,12 @@ namespace Updated_Battleship
                     {
                         {
                             hitMatrix[currentSelection[0] + a, currentSelection[1]] = "X";
+ 
+
                         }
                     }
-
+ 
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
-                }
-                else
-                {
-                    notPlacable();
                 }
             }
             for (int i = 0; i <= size - 1; i++)
@@ -423,20 +442,24 @@ namespace Updated_Battleship
                     selectMatrix[i, j] = "O";
                 }
             }
+ 
             return isPlacable;
         }
-
+        
         static void Main(string[] args)
         {
-
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Welcome to battleships!");
+
+            string h = "hello";
 
             int size = 1;
             int crosses = 0;
+            int hitsUsed = 0;
             bool isRunning = true;
             while (isRunning)
             {
-                size = safeIntInput("Please enter grid size (1 to 26): ");
+                size = safeIntInput("Please enter grid size (2 to 26): ");
                 if (size >= 2)
                 {
                     if (size <= 26)
@@ -457,7 +480,7 @@ namespace Updated_Battleship
             int numberofboats = safeIntInput("Please enter desired number of boats: ");
             string[,] hitMatrix = new string[size, size];
             string[,] selectMatrix = new string[size, size];
-
+  
             for (int i = 0; i <= size - 1; i++)
             {
                 for (int j = 0; j <= size - 1; j++)
@@ -483,7 +506,7 @@ namespace Updated_Battleship
 
                 Random generator3 = new Random();
                 int rand3 = generator.Next(1, 4);
-
+  
 
                 if (addShip(size, hitMatrix, selectMatrix, length, currentSelection, rand3, crosses))
                 {
@@ -516,8 +539,10 @@ namespace Updated_Battleship
 
             }
             Console.Clear();
-            Destroy(size, hitMatrix, selectMatrix, crosses, numberofboats);
+            Destroy(size, hitMatrix, selectMatrix, crosses, numberofboats, hitsUsed);
             Console.Read();
         }
+
+
     }
 }
