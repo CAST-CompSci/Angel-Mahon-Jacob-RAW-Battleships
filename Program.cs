@@ -16,7 +16,7 @@ namespace Test_of_increace
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Clear();
-            for (var a = 0; a < 990; a++)
+            for (var a = 0; a < 900; a++)
             {
                 Console.Write(":-) ");
             }
