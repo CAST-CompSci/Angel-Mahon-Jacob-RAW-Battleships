@@ -34,7 +34,7 @@ namespace Test_of_increace
             System.Environment.Exit(1);
         }
 
-        static void Looser()
+        static void Loser()
         {
             Console.Clear();
             Console.WriteLine("You ran out of hits, :-(. Better luck next time.");
