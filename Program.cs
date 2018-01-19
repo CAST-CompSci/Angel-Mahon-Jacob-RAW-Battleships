@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +15,14 @@ namespace Test_of_increace
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.Clear();
+            //^changes the console and text colour.
             for (var a = 0; a < 900; a++)
             {
                 Console.Write(":-) ");
             }
+            //^puts happy smiley faces across the screen.
             System.Threading.Thread.Sleep(100);
+
             string winner = "Congratulations, you have won this game of Battleships!";
 
             Console.SetWindowSize(120, 30);
@@ -32,12 +34,13 @@ namespace Test_of_increace
             }
             Console.ReadKey();
             System.Environment.Exit(1);
+            //^centres the text for winning and makes it stagger, reminiscent of the old arcade games.
         }
 
         static void Loser()
         {
             Console.Clear();
-            Console.WriteLine("You ran out of hits, :-(. Better luck next time.");
+            Console.WriteLine("You ran out of hits, :-(. Better luck next time!");
             Console.ReadKey();
             for (var a = 0; a < 1000; a++)
             {
@@ -45,6 +48,7 @@ namespace Test_of_increace
             }
             System.Threading.Thread.Sleep(10);
             System.Environment.Exit(1);
+            //^ tells you you've lost and puts sad faces on the screen.
         }
         static int safeIntInput(String message)
         {
@@ -75,7 +79,7 @@ namespace Test_of_increace
             currentSelection[0] = 0;
             currentSelection[1] = 0;
             string selectionType = "X";
-            
+
             while (true)
             {
                 selectMatrix[currentSelection[0], currentSelection[1]] = selectionType;
@@ -117,7 +121,7 @@ namespace Test_of_increace
                 }
                 else if (keyinfo.Key == ConsoleKey.Enter)
                 {
-                    
+
                     int length = 5;
                     selectionType = "E";
                     if (hitMatrix[currentSelection[0], currentSelection[1]] == " ")
@@ -288,10 +292,10 @@ namespace Test_of_increace
             for (var a = 2; a <= numberOfboats + 1; a++)
             {
                 total = total + a;
-           
+
             }
             int remainingHits = 0;
-            remainingHits = remainingHits + (((size*size) - total)/2) - hitsUsed;
+            remainingHits = remainingHits + (((size * size) - total) / 2) - hitsUsed;
             Console.WriteLine("");
             Console.WriteLine("Game stats. Hits: " + hits + "/" + total);
             Console.WriteLine("Remaining misses: " + remainingHits);
@@ -301,7 +305,7 @@ namespace Test_of_increace
             }
             if (remainingHits == 0)
             {
-                Looser();
+                Loser();
             }
         }
 
@@ -333,7 +337,7 @@ namespace Test_of_increace
                     {
 
                         hitMatrix[currentSelection[0], currentSelection[1] - a] = "X";
-                        
+
 
                     }
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
@@ -362,7 +366,7 @@ namespace Test_of_increace
                     {
                         {
                             hitMatrix[currentSelection[0], currentSelection[1] + a] = "X";
-  
+
                         }
                     }
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
@@ -392,13 +396,13 @@ namespace Test_of_increace
                     {
                         {
                             hitMatrix[currentSelection[0] - a, currentSelection[1]] = "X";
-                     
+
                         }
                     }
-                    
+
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
                 }
-        
+
 
 
 
@@ -427,11 +431,11 @@ namespace Test_of_increace
                     {
                         {
                             hitMatrix[currentSelection[0] + a, currentSelection[1]] = "X";
- 
+
 
                         }
                     }
- 
+
                     hitMatrix[currentSelection[0], currentSelection[1]] = "X";
                 }
             }
@@ -442,10 +446,10 @@ namespace Test_of_increace
                     selectMatrix[i, j] = "O";
                 }
             }
- 
+
             return isPlacable;
         }
-        
+
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -480,7 +484,7 @@ namespace Test_of_increace
             int numberofboats = safeIntInput("Please enter desired number of boats: ");
             string[,] hitMatrix = new string[size, size];
             string[,] selectMatrix = new string[size, size];
-  
+
             for (int i = 0; i <= size - 1; i++)
             {
                 for (int j = 0; j <= size - 1; j++)
@@ -506,7 +510,7 @@ namespace Test_of_increace
 
                 Random generator3 = new Random();
                 int rand3 = generator.Next(1, 4);
-  
+
 
                 if (addShip(size, hitMatrix, selectMatrix, length, currentSelection, rand3, crosses))
                 {
