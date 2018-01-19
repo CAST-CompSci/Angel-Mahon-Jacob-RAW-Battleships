@@ -72,7 +72,7 @@ namespace Test_of_increace
             }
             return Number;
         }
-
+        //^checks that the player has made a correct input, and tells them if they have.
         static void Destroy(int size, string[,] hitMatrix, string[,] selectMatrix, int crosses, int numberOfBoats, int hitsUsed)
         {
             int[] currentSelection = new int[2];
@@ -121,8 +121,6 @@ namespace Test_of_increace
                 }
                 else if (keyinfo.Key == ConsoleKey.Enter)
                 {
-
-                    int length = 5;
                     selectionType = "E";
                     if (hitMatrix[currentSelection[0], currentSelection[1]] == " ")
                     {
@@ -151,7 +149,7 @@ namespace Test_of_increace
             }
 
         }
-
+        //^ shows the player that they've hit, missed, 
         static void BuildAll(int size, string[,] hitMatrix, string[,] selectMatrix, int crosses, int numberOfboats, int hitsUsed)
         {
             int hits = 0;
@@ -530,23 +528,17 @@ namespace Test_of_increace
                             Console.Write("=");
                         }
                     }
-
                     Console.CursorLeft = 50;
-
                 }
                 else
                 {
                     a--;
                 }
 
-
-
             }
             Console.Clear();
             Destroy(size, hitMatrix, selectMatrix, crosses, numberofboats, hitsUsed);
             Console.Read();
         }
-
-
     }
 }
